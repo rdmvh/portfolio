@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xml:lang="en" lang="en" manifest="emu8080.manifest">
+  <head>
+    <!--
+    Zilog Z80 CPU Emulator
+    Release 0.01 Copyright (C) 2017 by Greg Sydney-Smith
+
+    Based on the work of:
+    - Intel 8080 CPU Emulator, 2010 by Stefan Tramm
+    - js8080 from bluishcoder
+    - ShellInABox - Make command line applications available as AJAX web applications
+      Copyright (C) 2008-2009 Markus Gutschke markus@shellinabox.com
+      The most up-to-date version of this program is always available from
+      http://shellinabox.com
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2 as
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+    -->
+    <title>Zilog Z80 CPU Emulator</title>
+    <link rel="stylesheet" href="styles.css" type="text/css"/>
+    <script type="text/javascript"><!--
+      // We would like to hide overflowing lines as this can lead to
+      // visually jarring results if the browser substitutes oversized
+      // Unicode characters from different fonts. Unfortunately, a bug
+      // in Firefox prevents it from allowing multi-line text
+      // selections whenever we change the "overflow" style. So, only
+      // do so for non-Netscape browsers.
+      if (typeof navigator.appName == 'undefined' ||
+          navigator.appName != 'Netscape') {
+        document.write('<style type="text/css">' +
+                       '#vt100 #console div, #vt100 #alt_console div {' +
+                       '  overflow: hidden;' +
+                       '}' +
+                       '</style>');
+      }
+
+      suppressAllAudio = true;
+      linkifyURLs      = 1;
+      userCSSList      = [ [ 'White on Black', true, false ],
+                           [ 'Black on White', false, true ],
+                           [ 'Monochrome', true, false ],
+                           [ 'Color Terminal', false, true ] ];
+    --></script>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+    <meta name="application-name" content="z80emu"/>
+    <meta name="description" content="Zilog Z80 CPU Emulator"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="icon32.png" sizes="32x32"/>
+    <link rel="icon" href="icon48.png" sizes="48x48"/>
+    <script type="text/javascript" src="disk.js"></script>
+    <script type="text/javascript" src="memio.js"></script>
+    <script type="text/javascript" src="z80.js"></script>
+    <script type="text/javascript" src="vt100.js"></script>
+    <script type="text/javascript" src="emulator.js"></script>
+    <!--<script type="text/javascript" src="cachedbg.js"></script>-->
+		<style>
+	#vt100{font-size:24px}
+	body{padding:0px}
+	</style>
+  </head>
+  <!-- Load Emulator(ShellInABox) from a timer as Konqueror sometimes fails to
+       correctly deal with the enclosing frameset (if any), if we do not
+       do this
+  -->
+  <body onload="setTimeout('new Emulator()', 100)" scroll="no">
+    <noscript>JavaScript must be enabled for the emulator</noscript>
+  </body>
+</html>

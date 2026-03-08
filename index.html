@@ -1,5 +1,430 @@
-<html>
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+<style>
+body{font-family: 'Roboto Slab', sans-serif;font-size:18px;;margin:0px;overflow:hidden}
+*{box-sizing: border-box;outline: none;position:relative}
+.CONTAINER{width:100%;float:left}.CONTENT{width:93%;max-width:1340px;float:left}
+.THIRD,.FOURTH,.HALF,.THREE-FOURTH{float:left;min-height:1px}.THIRD{width:33.33%;}.FOURTH{width:25%;}.HALF{WIDTH:50%;}.THREE-FOURTH{width:75%}
+
+a{text-decoration:none;color:#000;cursor:pointer}
+
+label,textarea,input[type=text],input[type=password],select{float:left;margin:0px;margin-bottom:10px}
+textarea,input[type=text],input[type=password],select{
+outline: none;border:solid 2px #001540;width:100%;padding:10px;border-radius:4px;;font-size:14px;
+}
+
+pre p{margin-bottom:0px}
+
+button{cursor:pointer}
+.MAINBTN{border-width:0px;padding:9px;background-color:#04555f;color:#fff;border-radius:24px;transition: padding-left 0.1s;font-family: 'Open Sans', sans-serif;}
+.MAINBTN:hover,.MAINBTNON{background-color:#000;;color:white;text-decoration:none;}
+.ICONBTN{padding-left:32px;background-repeat: no-repeat;background-position: left}
+.WHEEL{background-image:url('/images/wheel.svg') }
+
+
+.HEADER-MENU{border-bottom:solid 2px #eee}
+.HEADER-MENU a, .HEADER-MENU button{float:right;padding:18px;color:#000;user-select: none}
+.HEADER-MENU .WITHICO{background-color:;background-repeat:no-repeat;background-position:right 5px center;padding-right:35px}
+.HEADER-MENU .ICO{background-repeat:no-repeat;background-position:center;   color:transparent}
+.HEADER-MENU .MOB{float:left;visibility:hidden}
+
+
+
+#HEADER-MENU{position:fixed;;z-index:10;background-color:#fff}
+
+.LOGO{position:absolute;height:30px;top:16px;left:20px}
+
+.MAIN{margin-left:240px;;width:calc(100% - 240px);padding:;}
+
+.LEFT{position:fixed;float:left;left:0px;width:240px;height:100%;background-color:#fff;overflow:AUTO;border-right:solid 2px #eee;transition:left 0.2s ease;z-index:1000}
+.LEFT a{float:left;width:100%;color:#000;padding:20px;border-bottom:dotted 1px #eee}
+.LEFT a:hover{background-color:#F8F8F8}
+
+h1,h2,h3,p,textarea,input[type=text],input[type=password],select{margin:0px;margin-bottom:10px;}
+
+
+.MENU{background-image:url(/menu.svg);}
+.CLOSE{background-image:url(/close.svg);}
+.SETTINGS{background-image:url(/settings.svg);}
+.ARROWDOWN{background-image:url(/arrowdown.svg?c=233);}
+.ARROWUP{background-image:url(/arrowup.svg?c=3443);}
+
+
+.LOAD{
+
+	left:0px;visibility:hidden;float:left;height:4px;position:absolute;background-color:#7cc8b2;width:0%;transition:width 0.4s ease;
+	z-index:2000;
+	/*;animation: slide 1s linear infinite;*/
+	}
+.FLOAD{visibility:visible;width:75%;}
+.SLOAD{visibility:visible;width:100%;}
+
+
+@keyframes slide{0% {transform: translate3d(0, 0, 0);}100% {transform: translate3d(1692px, 0, 0);}}
+
+
+#myIframe{visibility:hidden;background-color:#fff;float:left;border:solid 0px #000;width:100%;}
+
+@media only screen and (max-width: 900px){
+
+.CONTENT{width:100%}
+
+.togleft{left:-240px}
+
+.MAIN{margin-left:0;;width:calc(100% - 0px);padding:}
+
+.HEADER-MENU .MOB{visibility:visible}
+
+.LOGO{position:absolute;height:20px;top:20px;left:50px}
+
+
+}
+
+</style>
+
+
+</head>
 <body>
-<h1>Hello</h1>
+
+<span id=TP></span>
+
+<div class='CONTAINER HEADER-MENU'><a>...</a></div>
+
+<span id=LOADER class=LOAD></span>
+
+<div class='CONTAINER HEADER-MENU' id=HEADER-MENU style=''>
+<div class='CONTENT' style=''>
+
+<!--img src="/logo.png?c=44" class=LOGO-->
+
+<a class='ICO MOB MENU' id=mob onmousedown="if($_('LEFT').className=='LEFT'){$_('LEFT').className='LEFT togleft';this.className='ICO MOB MENU'}else{$_('LEFT').className='LEFT';;this.className='ICO MOB CLOSE'}">...</a>
+
+<a onclick=sm('author')>About</a>
+
+<a class='WITHICO ARROWDOWN' onclick=oo(this,'options')>Options</a>
+
+
+
+</div></div>
+
+
+
+
+
+
+<div class='CONTAINER' style='background-color:white'>
+<div class='CONTENT' style='min-height:700px;' id=MAIN>
+
+<div class='LEFT togleft' id=LEFT>
+<a href='/res/cpm/index.html' target=myIframe>CP/M OS on emulated Z80 cpu</a>
+</div>
+
+
+
+<div class=MAIN style=';min-height:400px;background-image:url(/wheel.svg?s=34ed33); background-repeat:no-repeat;background-position:center'>
+<iframe src="/res/cpm/index.html" id=myIframe autofocus=true  name=myIframe></iframe>
+</div>
+
+
+
+
+
+
+</div></div>
+
+
+
+<div class='CONTAINER'>
+<div class='CONTENT'>
+
+</div></div>
+
+
+
+
+
+<div id=MSGCONT>
+
+<div id=op onmousedown=event.stopPropagation()></div>
+
+<div class="options" id="options" >
+<!--a xhref="/res<?php echo $init ;?>.php" onclick=this.href='/res/'+v+'.html' target=_blank>Open content in new window</a-->
+<a onclick=sm('font-size')>Font size</a>
+
+<a onclick=sm('template')>About this tamplate</a>
+</div>
+
+
+<h1 class="options" id="font-size-h" >Select text size</h1>
+
+<div class="options" id="font-size" w="MES-SM">
+<a onclick="document.body.style.fontSize='18px',setCookie('font-size','18px',365)">18px</a>
+<a onclick="document.body.style.fontSize='22px',setCookie('font-size','22px',365)">22px</a>
+<a onclick="document.body.style.fontSize='28px',setCookie('font-size','28px',365)">28px</a>
+
+</div>
+
+
+
+<h1 id=author-h style='text-align:center'>Rachid Toualbi</h1>
+<span id=author style='float:left;width:100%'  w="MES-LG">
+<button class='' id=AIM style="margin-bottom:20px;background-size:auto 100%;background-position:center;background-repeat:no-repeat;background-image:url(/image/218/nohtml?v=82308);border-width:0px;padding:70px;border-radius:50%;margin-left:calc(50% - 70px)"></button>
+<p style='text-align:center'>Web designer / developer One advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guestOne advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guestOne advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guestOne advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guestOne advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guestOne advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guest</p>
+</span>
+
+<h1 id=template-h>About this template...</h1>
+<pre id=template>
+<p><b style='color:green'>Language: </b>Vanilla javascript</p>
+<p><b>Database: </b>Sqlite 3</p>
+<p><b>Back end: </b>PHP7</p>
+</pre>
+
+
+
+
+<h2 id=csh-h>Historique<button class=CLEAR type=button onclick=closemessage()></button></h2>
+<div id=csh >Sure de suprimer historique?</div>
+<button class=MAINBTN id=csh-opt onclick=clearhistory()>Suprimer</button>
+
+<h2 id=cshconfirm-h>Historique</h2>
+<div id=cshconfirm>Historique suprime</div>
+
+
+
+<h1 id=about-editor-h >About</h1>
+
+<p id=about-editor>By Rachid toualbi, Simple editor with basid options </p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<style>
+#MSGCONT,.MSGCONT{display:none}
+.options a {float:left;width:100%;padding:12px;padding-left:24px;}
+.options a:hover {background-color:#F8F8F8}
+#op{padding-top:12px;padding-bottom:12px;float:left;;border:solid 2px #eee;border-radius:8px;right:0px;background-color:#fff;position:absolute;
+;transition: all 0.1s ease-in-out;overflow-y:scroll;max-height:240px
+}
+#options a{min-width:200px}
+
+.grow { transform: scale(0.5,0.5);opacity:0 }
+.growonsm {transform: scale(1,1);opacity:1 }
+.growon { transform: scale(1.1,1.1);opacity:1 }
+
+.table { visibility:hidden;opacity:0;position:fixed;left:0px;top:0px;display: table;background-color:red;width:100%;height:100%;background: rgba(0, 0, 0, 0.2);z-index:10000;;transition: all 0.1s ease-in-out;}
+.tr {display: table-row;}
+.td {display: table-cell;}
+.MES{background-color:white;height:10%;vertical-align:top;;border-radius:20px;;border:solid 20px transparent;; box-shadow: 0px 10px 50px -18px #000000;}
+#MESSAGE{float:left;width:100%;overflow-y:auto;max-height:300px;margin-bottom:20px}
+#MESSAGE-H{float:left;width:100%}
+#MESSAGE-F{float:left;width:100%}
+.MES-SM{width:300px}.MES-MD{width:400px}.MES-LG{width:500px}
+
+
+@media only screen and (max-width: 900px){.MES{width:90%}}
+
+</style>
+
+
+
+
+<div class = "table" id=COVER  onclick=smclose() >
+<div class = "tr"><div class = "td" ></div><div class = "td"></div><div class = "td"></div></div>
+<div class = "tr">
+<div class = "td"></div>
+<div class = "td MES MES-MD" id=MES  onclick=event.stopPropagation()>
+<span id=MESSAGE-H ></span>
+<span id=MESSAGE></span>
+<span id=MESSAGE-F >
+<button CLASS=MAINBTN id=CLOSEBTN STYLE='float:right' type=button onclick=smclose()>Fermer</button>
+<span id=MESSAGE-OPT ></span>
+</span></div><div class = "td"></div></div>
+<div class = "tr"><div class = "td"></div><div class = "td"></div><div class = "td"></div></div>
+</div>
+
+
+
+<script>
+
+
+var currentTab;
+function oo(x,y){
+if($_('op').parentNode !=x){
+x.appendChild($_('op'));
+$_('op').style.top=x.offsetHeight + 0 +'px';
+if($_('op').innerHTML!=''){$_('MSGCONT').appendChild($_('op').getElementsByTagName('*')[0]);}}
+
+$_('op').appendChild($_(y));
+if($_('op').style.visibility=='visible'  && x == currentTab){
+	$_('op').style.visibility='hidden';
+	$_('op').className='grow'
+	
+	x.className='WITHICO ARROWDOWN'
+	}else{
+	$_('op').style.visibility='visible';
+	$_('op').className='growon'
+	x.className='WITHICO ARROWUP'
+	}
+currentTab=x;
+}
+
+
+function sm_simple(h,m){
+$_('MESSAGE-H').innerHTML=h
+$_('MESSAGE').innerHTML=m
+$_('COVER').style.visibility='visible';
+$_('COVER').style.opacity='1';
+//$_('MES').classList.remove('grow')
+//$_('MES').classList.add('growonsm')
+}
+
+function sm(x){
+$_('COVER').style.visibility='visible';
+$_('COVER').style.opacity='1';
+
+if($_('MESSAGE-H').innerHTML!=''){$_('MSGCONT').appendChild($_('MESSAGE-H').getElementsByTagName('*')[0]);}
+if($_('MESSAGE').innerHTML!=''){$_('MSGCONT').appendChild($_('MESSAGE').getElementsByTagName('*')[0]);}
+if($_('MESSAGE-OPT').innerHTML!=''){$_('MSGCONT').appendChild($_('MESSAGE-OPT').getElementsByTagName('*')[0]);}
+
+//if(! $_(x)){$_('MESSAGE').innerHTML=x;return;}
+
+
+if($_(x+'-h')){$_('MESSAGE-H').appendChild($_(x+'-h'));}
+if($_(x)){$_('MESSAGE').appendChild($_(x));}
+if($_(x+'-opt')){$_('MESSAGE-OPT').appendChild($_(x+'-opt'));}
+
+if($_(x).getAttribute('w')){$_('MES').className="td MES "+$_(x).getAttribute('w')}else{$_('MES').className="td MES MES-MD"}
+
+
+//$_('MES').classList.remove('grow')
+//$_('MES').classList.add('growonsm')
+}
+
+function smclose(){
+$_('COVER').style.visibility='hidden';
+$_('COVER').style.opacity='0';
+
+//$_('MES').classList.remove('growonsm')
+//$_('MES').classList.add('grow')
+}
+
+
+document.addEventListener("mousedown", function (e) {if (e.target !=currentTab) {
+	$_("op").style.visibility='hidden';
+	$_('op').className='grow'
+	currentTab.className='WITHICO ARROWDOWN'	
+	}});
+
+</script>
+
+
+<script>
+function $_(id){return document.getElementById(id);}
+
+window.addEventListener("resize", adj);  
+
+
+	$_('LOADER').className='LOAD FLOAD';
+
+
+function adj(){
+$_("LEFT").style.height =window.innerHeight - $_("HEADER-MENU").offsetHeight +'px'	
+$_("myIframe").style.height = $_("LEFT").style.height
+}
+
+adj();
+
+
+document.body.style.fontSize=getCookie('font-size');
+
+m = document.getElementsByTagName('a');
+for (i=0;i<m.length;i++) {
+if(m[i].href){m[i].onclick=function(){
+$_('LOADER').className='LOAD FLOAD';
+
+$_("myIframe").style.visibility='hidden';
+
+}
+}}
+
+
+
+$_("myIframe").addEventListener('load', function(event) {
+$_('LOADER').className='LOAD SLOAD';
+setTimeout(function(){
+	$_('LOADER').className='LOAD';
+    $_('LEFT').className='LEFT togleft'
+    $_('mob').className='ICO MOB MENU'
+    $_("myIframe").style.visibility='visible';
+	
+	},500)
+	/*
+v = this.contentWindow.location.href.split('/');
+v = v[v.length - 1].split('.')[0];
+*/
+
+v = this.contentWindow.location.href.replace("http://192.168.177.118/res","").split('.')[0];
+
+
+history.replaceState('','', '/'+v)
+
+
+this.contentWindow.document.body.onclick = function() {
+		$_("op").style.visibility='hidden';
+		$_('op').className='grow'
+		currentTab.className='WITHICO ARROWDOWN'
+    }
+});
+
+
+
+
+
+function setCookie(cname,cvalue,exdays) {
+var d = new Date();d.setTime(d.getTime() + (exdays*24*60*60*1000));
+var expires = "expires=" + d.toGMTString();
+document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+
+</script>
+	
+	
 </body>
 </html>
