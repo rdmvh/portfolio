@@ -1,0 +1,244 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move dot along a curve</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+<script src="drag.js?a=45"></script>
+<link href="gf.css?s=22" rel="stylesheet">
+
+
+</head>
+<body style="margin:0px;">
+
+
+<div id=LEFT style="scroll-behavior: smooth;float:left;width:50%;overflow-y:scroll;overflow-x:hidden;height:100%">
+
+<div style="width:200%;float:left">
+
+<div style="width:50%;float:left;height:100%">
+
+<list>
+
+<span class=sample onclick="$('#prexp').value='ax^2+bx+c',scrlto(this,['a','b','c'],[5,0,0]),simple()">`f(x)=ax^{2}+bx+c`</span>
+
+<span class=sample onclick="$('#prexp').value='a cos((pi *x)/b)',scrlto(this,['a','b'],[28,28]),simple()">`f(x)=a cos((pi *x)/b)`</span>
+
+<span class=sample onclick="$('#prexp').value='sin(x)+ax',scrlto(this,['a'],[3]),simple()">`f(x)=sin(x)+ax`</span>
+
+<span class=sample onclick="$('#prexp').value='sqrt(abs(x))',scrlto(this),simple()">`f(x)=sqrt(abs(x))`</span>
+
+<span class=sample onclick="$('#prexp').value='sqrt(abs(rds- x^2))',scrlto(this,['rds'],[90]),simple()">`x^{2}+y^{2}=1`</span>
+
+<span class=sample id=tangent onclick="$('#prexp').value='bx+c',scrlto(this,['b','c'],[0,0]),simple()">`f(x)=bx+c`</span>
+
+</list>
+
+</div>
+
+
+
+
+<div  style="width:50%;float:left;height:100%;padding:0px">
+
+<div class='CONTAINER HEADER-MENU'>
+<button onclick="$('#LEFT').scrollTo(0, 0)" class=RETURN></button>
+</div>
+
+
+<div style='float:left;padding:20px;'>
+
+<list id=identity style="float:left;;font-size:24px"></list>
+
+<list id=opts></list>
+
+<input hidden type=text id=exp value='' />
+
+<input hidden type=text id=prexp value='' />
+
+<list hidden id=current style=";font-size:24px;"></list>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div id=RIGHT style="position:relative">
+
+<button class="resize" onclick=resizeplus() id=add></button>
+<button class="resize" onclick=resizeminus()  id=remove></button>
+
+
+<svg 
+   xmlns="http://www.w3.org/2000/svg"
+   id=ball
+   style="border:solid 0px #999;width:400%;height:400%;background-image:url('gf11.svg'),url('gf10.svg');;background-position:center;transition: background-size 0.5s;">
+   <line id=ln1 x1="0" y1="50%" x2="100%" y2="50%" style="stroke:#000;stroke-width:2" />  
+   <line id=ln1 x1="50%" y1="0" x2="50%" y2="100%" style="stroke:#000;stroke-width:2" />  
+  <g id=rule></g>
+   <path
+    id="curve"
+    d=""
+    style="fill: red; ;fill-opacity:0.1; stroke: red; stroke-width: 4;" 
+	/>
+</svg>
+
+</div>
+
+
+
+<script>
+function $(e){return document.querySelector(e);}
+
+
+var d = '';
+
+sqsize = 38;
+
+steps = 10;
+startdots = -1000 ;
+numberofdots = 201;
+
+
+function simple(){
+
+var xs = [];
+var v = startdots;
+for(i=0;i< numberofdots;i++){
+xs[i] = v;
+v +=steps;
+}
+
+var xsn = [];
+ys = [];
+
+for(i=0;i<xs.length;i++){
+
+ys[i] = math.evaluate($('#exp').value.replaceAll('x','('+xs[i]/sqsize+')'))*sqsize;
+ys[i]=Math.ceil(ys[i])
+
+ys[i] *=-1;
+
+m = $('#ball').getBoundingClientRect().width 
+a = $('#ball').getBoundingClientRect().height
+
+xsn[i] = xs[i]+ m/2;
+ys[i] += a/2;
+}
+
+d =`
+M ${xsn[0]},${ys[0]} `;
+
+for(i=1;i<xs.length;i++){
+d +=`L ${xsn[i]},${ys[i]} `;
+}
+
+$('#curve').setAttribute('d',d);
+
+}
+
+
+
+
+
+function scrlto(x,opts=[],defs=[]){
+
+$('#identity').innerHTML=x.innerHTML;
+$('#opts').innerHTML='';
+
+var tmpexp = $('#prexp').value;
+
+for(i=0;i<opts.length;i++){
+$('#opts').innerHTML+="<p>`"+opts[i]+"`:<span id=disp"+opts[i]+"></span></p><input  vl="+opts[i]+" id=sld"+opts[i]+" oninput=slide(this) onchange=endslide() type='range' min=0 max=100 value="+defs[i]+" class=slider>";
+
+tmpexp = tmpexp.replaceAll(opts[i],$("#sld"+opts[i]).value);
+
+}
+$('#exp').value = tmpexp;
+
+$('#current').innerHTML="`f(x)="+tmpexp+"`";
+
+
+$('#LEFT').scrollTo($('#LEFT').offsetWidth*2, 0)
+
+var math = document.getElementById("opts");
+MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+
+var math = document.getElementById("current");
+MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+
+
+v = $('#opts').getElementsByTagName('input');
+
+for(i=0;i<v.length;i++){
+slide(v[i])
+}
+
+
+}
+
+
+
+
+
+
+
+function slide(x){
+
+var tmpexp = $('#prexp').value;
+
+v = $('#opts').getElementsByTagName('input');
+
+for(i=0;i<v.length;i++){
+tmpexp = tmpexp.replaceAll(v[i].getAttribute('vl'),v[i].value/10);
+$("#disp"+v[i].getAttribute('vl')).innerHTML=v[i].value;
+}
+
+$('#exp').value = tmpexp;
+
+
+if($('#sldrds')){
+aa = math.sqrt(($('#sldrds').value/10));
+steps = 1;
+startdots = -38 * aa ;
+numberofdots = (76 * aa) +1 ;
+}else{
+
+
+steps = 10;
+startdots = -1000 ;
+numberofdots = 201;
+}
+
+simple();
+
+}
+
+
+
+
+
+
+drawrule();
+
+
+
+$('#prexp').value='bx+c';
+scrlto($('#tangent'),['b','c'],[10,0]);
+simple()
+
+</script>
+
+</body>
+</html>

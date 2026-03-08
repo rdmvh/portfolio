@@ -1,0 +1,398 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move dot along a curve</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+
+
+<style>
+body{font-family: 'Roboto Slab', sans-serif;font-size:18px;;margin:0px;overflow:hidden}
+*{box-sizing: border-box;outline: none;position:relative}
+
+list{float:left;width:100%;margin-bottom:0px;border-bottom:solid 0px #eee;padding-bottom:20px}
+h1,h2,h3,p,textarea,input[type=text],input[type=password],select{margin:0px;margin-bottom:10px;}
+
+label,textarea,input[type=text],input[type=password],select{float:left;margin:0px;margin-bottom:10px}
+textarea,input[type=text],input[type=password],select{
+outline: none;border:solid 2px #eee;width:100%;padding:10px;border-radius:4px;;font-size:18px;
+}
+
+button{cursor:pointer}
+.MAINBTN{border-width:0px;padding:9px;background-color:#000;color:#fff;border-radius:12px;transition: padding-left 0.1s;font-family: 'Open Sans', sans-serif;}
+.MAINBTN:hover,.MAINBTNON{background-color:#000;;color:white;text-decoration:none;}
+.ICONBTN{padding-left:32px;background-repeat: no-repeat;background-position: left}
+.WHEEL{background-image:url('/images/wheel.svg') }
+
+#info{float:left;width:100%;}
+#exp{float:left;width:100%;padding:10px;border:dashed 2px #eee;border-radius:4px;margin-bottom:10px;font-size:24px;}
+#exp:focus{border:dashed 2px #000}
+
+.resize{border:solid 2px transparent;padding:18px;border-radius:50%;position:fixed;top:10px;z-index:10;;background-repeat:no-repeat;background-position:center}
+.resize:hover{border:solid 2px #000;}
+#add{background-image:url('add_black_24dp.svg');right:30px;}
+#remove{background-image:url('remove_black_24dp.svg');right:80px;}
+
+.sample{float:left;width:100%;color:#000;padding:20px;border-bottom:dotted 1px #eee;cursor:hand}
+.sample:hover{background-color:#F8F8F8}
+
+#RIGHT{float:left;width:50%;
+overflow:hidden;
+height:100%;
+transition: background-size 0.5s;
+
+}
+
+.slider{width:90%;margin-bottom:10px}
+.small{font-size:15px}
+</style>
+
+
+
+</head>
+<body style="margin:0px;">
+
+
+<div id=LEFT style="scroll-behavior: smooth;float:left;width:50%;overflow-y:scroll;overflow-x:hidden;height:100%">
+
+<div style="width:200%;float:left">
+
+<div style="width:50%;float:left;height:100%">
+
+
+
+
+<list>
+
+
+<span class=sample onclick="$('#prexp').value='ax^2+bx+c',scrlto(this,['a','b','c'],[1,0,0]),simple()">`f(x)=ax^{2}+bx+c`</span>
+
+<span class=sample onclick="$('#prexp').value='a cos((pi *x)/b)',scrlto(this,['a','b'],[2,4]),simple()">`f(x)=a cos((pi *x)/b)`</span>
+
+<span class=sample onclick="$('#prexp').value='sqrt(abs(x))',scrlto(this),simple()">`f(x)=sqrt(abs(x))`</span>
+
+
+<!--button onclick="size(),test(),simple()">test</button-->
+
+
+</list>
+
+
+
+
+</div>
+
+
+<div  style="width:50%;float:left;height:100%;padding:20px">
+
+
+<div id=identity style=";font-size:24px;margin-bottom:30px"></div>
+
+<list id=opts>
+</list>
+
+
+
+
+<button class=MAINBTN onclick="$('#LEFT').scrollTo(0, 0)">Return</button>
+
+
+<input hidden type=text id=exp value='' />
+
+<input hidden type=text id=prexp value='' />
+
+
+<div id=current style=";font-size:24px;margin-bottom:30px"></div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+<div id=RIGHT style="position:relative">
+
+<button class="resize" onclick=resizeplus() id=add></button>
+<button class="resize" onclick=resizeminus()  id=remove></button>
+
+
+<svg 
+   xmlns="http://www.w3.org/2000/svg"
+   id=ball
+   style="border:solid 0px #999;width:400%;height:400%;background-image:url('gf10.svg');background-position:center">
+   
+   <line id=ln1 x1="0" y1="50%" x2="100%" y2="50%" style="stroke:#000;stroke-width:2" />  
+
+   <line id=ln1 x1="50%" y1="0" x2="50%" y2="100%" style="stroke:#000;stroke-width:2" />  
+
+   <!--text id=t1 class="small">0</text>
+   <text id=t2 class="small">2</text>
+
+   <line id=ln1 x1="0" y1="50%" x2="100%" y2="50%" style="stroke:#ff9900;stroke-width:2" />  
+   <rect width="100%" height="100" x="0" y="50%"  style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+</rect>
+   <line id=ln2 x1="304" y1="0" x2="304" y2="100%" style="stroke:rgb(0,0,0);stroke-width:2" /-->
+
+  <g id=rule>
+
+  </g>
+
+   <path
+    id="curve"
+    d=""
+    style="fill: red; ;fill-opacity:0.1; stroke: red; stroke-width: 4;" 
+	/>
+  
+  
+   <path
+    id="curve2"
+    d=""
+    style="fill: none; stroke: blue; stroke-width: 4;" 
+	/>
+</svg>
+
+</div>
+
+
+
+<script>
+
+
+function size(){
+$('#ball').style.width=$('#ball').getBoundingClientRect().width*2
+$('#ball').style.height=$('#ball').getBoundingClientRect().height*2
+}
+
+
+function test(){
+const ele = document.getElementById('RIGHT');
+m = $('#ball').getBoundingClientRect().width - $('#RIGHT').offsetWidth
+a = $('#ball').getBoundingClientRect().height - $('#RIGHT').offsetHeight
+
+ele.scrollTop = a/2;
+ele.scrollLeft = m/2;
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const ele = document.getElementById('RIGHT');
+
+	ele.scrollTop  = ($('#ball').getBoundingClientRect().height - $('#RIGHT').offsetHeight)/2;
+    ele.scrollLeft = ($('#ball').getBoundingClientRect().width - $('#RIGHT').offsetWidth)/2;
+
+    ele.style.cursor = 'grab';
+
+    let pos = { top: 0, left: 0, x: 0, y: 0 };
+
+    const mouseDownHandler = function(e) {
+        ele.style.cursor = 'grabbing';
+        ele.style.userSelect = 'none';
+
+        pos = {
+            left: ele.scrollLeft,
+            top: ele.scrollTop,
+            x: e.clientX,
+            y: e.clientY,
+        };
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    };
+
+    const mouseMoveHandler = function(e) {
+        const dx = e.clientX - pos.x;
+        const dy = e.clientY - pos.y;
+        ele.scrollTop = pos.top - dy;
+        ele.scrollLeft = pos.left - dx;
+		
+    };
+
+    const mouseUpHandler = function() {
+        ele.style.cursor = 'grab';
+        ele.style.removeProperty('user-select');
+
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('mouseup', mouseUpHandler);
+    };
+
+    ele.addEventListener('mousedown', mouseDownHandler);
+});
+</script>
+
+
+
+
+
+
+<script>
+function $(e){return document.querySelector(e);}
+
+var d = '';
+
+
+var xs = [];
+var v = -1000;
+for(i=0;i< 201;i++){
+xs[i] = v;
+v +=10;
+}
+
+
+var ys = [];
+var xsn = [];
+
+sqsize = 38;
+
+function simple(){
+
+ys = [];
+
+for(i=0;i<xs.length;i++){
+ys[i] = math.evaluate($('#exp').value.replaceAll('x','('+xs[i]/sqsize+')'))*sqsize;
+ys[i]=Math.ceil(ys[i])
+
+ys[i] *=-1;
+
+m = $('#ball').getBoundingClientRect().width 
+a = $('#ball').getBoundingClientRect().height
+
+xsn[i] = xs[i]+ m/2;
+ys[i] += a/2;
+}
+
+
+d =`
+M ${xsn[0]},${ys[0]} `;
+
+for(i=1;i<xs.length;i++){
+d +=`L ${xsn[i]},${ys[i]} `;
+}
+
+//d +=`Z`;
+
+$('#curve').setAttribute('d',d);
+
+}
+
+
+//simple()
+
+
+function resizeplus(){
+sqsize=sqsize*2;
+nm*= 2;
+simple()
+drawrule()
+}
+
+
+function resizeminus(){
+sqsize=sqsize/2;
+nm/= 2;
+
+simple()
+drawrule()
+}
+
+$('#RIGHT').addEventListener('scroll', function() {})
+
+
+function scrlto(x,opts=[],defs=[]){
+
+$('#identity').innerHTML=x.innerHTML;
+$('#opts').innerHTML='';
+
+
+var tmpexp = $('#prexp').value;
+
+for(i=0;i<opts.length;i++){
+$('#opts').innerHTML+="<p>`"+opts[i]+"`:</p><input  vl="+opts[i]+" id=sld"+opts[i]+" oninput=slide(this) onchange=endslide() type='range' min=0 max=100 value="+defs[i]+" class=slider>";
+
+tmpexp = tmpexp.replaceAll(opts[i],$("#sld"+opts[i]).value);
+
+}
+$('#exp').value = tmpexp;
+
+$('#current').innerHTML="`f(x)="+tmpexp+"`";
+
+
+$('#LEFT').scrollTo($('#LEFT').offsetWidth*2, 0)
+
+var math = document.getElementById("opts");
+MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+
+var math = document.getElementById("current");
+MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+}
+
+
+function slide(x){
+
+var tmpexp = $('#prexp').value;
+
+v = $('#opts').getElementsByTagName('input');
+for(i=0;i<v.length;i++){
+
+tmpexp = tmpexp.replaceAll(v[i].getAttribute('vl'),v[i].value/10);
+
+}
+
+$('#exp').value = tmpexp;
+
+
+simple();
+
+}
+
+function endslide(){
+
+$('#current').innerHTML="`f(x)="+$('#exp').value+"`";
+
+
+var math = document.getElementById("current");
+MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+
+}
+
+
+
+
+
+var nm=1;
+
+function drawrule(){
+
+$('#rule').innerHTML='';
+v = ($('#ball').getBoundingClientRect().height/2);
+z = ($('#ball').getBoundingClientRect().width/2) 
+$('#rule').innerHTML+="<text class=small x="+(z+10)+"  y="+(v+20)+">0</text>"
+
+for(i=2;i<30;i+=2){$('#rule').innerHTML+="<text class=small x="+(z+(i*38))+"  y="+(v+20)+">"+i/nm+"</text>";}
+
+for(i=-2;i>-30;i-=2){$('#rule').innerHTML+="<text class=small x="+(z+(i*38))+"  y="+(v+20)+">"+i/nm+"</text>";}
+
+for(i=2;i<30;i+=2){$('#rule').innerHTML+="<text class=small x="+(z+10)+"  y="+(v+(i*38))+">"+(-i/nm)+"</text>";}
+
+for(i=-2;i>-30;i-=2){$('#rule').innerHTML+="<text class=small x="+(z+10)+"  y="+(v+(i*38))+">"+(-i/nm)+"</text>";}
+}
+
+drawrule();
+
+</script>
+
+</body>
+</html>

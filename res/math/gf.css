@@ -1,0 +1,45 @@
+body{font-family: 'Roboto Slab', sans-serif;font-size:18px;;margin:0px;overflow:hidden}
+*{box-sizing: border-box;outline: none;position:relative}
+.CONTAINER{width:100%;float:left}.CONTENT{width:93%;max-width:1340px;float:left}
+
+list{float:left;width:100%;margin-bottom:0px;border-bottom:solid 0px #eee;padding-bottom:20px}
+h1,h2,h3,p,textarea,input[type=text],input[type=password],select{margin:0px;margin-bottom:10px;}
+
+label,textarea,input[type=text],input[type=password],select{float:left;margin:0px;margin-bottom:10px}
+textarea,input[type=text],input[type=password],select{
+outline: none;border:solid 2px #eee;width:100%;padding:10px;border-radius:4px;;font-size:18px;
+}
+
+
+.HEADER-MENU{border-bottom:solid 2px #eee}
+.HEADER-MENU button{float:left;background-color:#fff;padding:28px;border-width:0px;background-repeat:no-repeat;background-position:center;}
+.HEADER-MENU button:hover{background-color:#F8F8F8}
+
+.RETURN{background-image:url(arrow_back_black_24dp.svg);}
+
+button{cursor:pointer}
+.MAINBTN{border-width:0px;padding:9px;background-color:#000;color:#fff;border-radius:12px;transition: padding-left 0.1s;font-family: 'Open Sans', sans-serif;}
+.MAINBTN:hover,.MAINBTNON{background-color:#000;;color:white;text-decoration:none;}
+.ICONBTN{padding-left:32px;background-repeat: no-repeat;background-position: left}
+.WHEEL{background-image:url('/images/wheel.svg') }
+
+#info{float:left;width:100%;}
+#exp{float:left;width:100%;padding:10px;border:dashed 2px #eee;border-radius:4px;margin-bottom:10px;font-size:24px;}
+#exp:focus{border:dashed 2px #000}
+
+.resize{border:solid 2px transparent;padding:18px;border-radius:50%;position:fixed;top:10px;z-index:10;;background-repeat:no-repeat;background-position:center}
+.resize:hover{border:solid 2px #000;}
+#add{background-image:url('add_black_24dp.svg');right:30px;}
+#remove{background-image:url('remove_black_24dp.svg');right:80px;}
+
+.sample{float:left;width:100%;color:#000;padding:20px;border-bottom:dotted 1px #eee;cursor:hand}
+.sample:hover{background-color:#F8F8F8}
+
+#RIGHT{float:left;width:50%;
+overflow:hidden;
+height:100%;
+}
+
+.slider{width:90%;margin-bottom:10px}
+.small{font-size:13px;font-weight:bold;font-family:verdana}
+
